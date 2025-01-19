@@ -1,9 +1,9 @@
 import axios from 'axios';
 import { IDevice } from '../type/device';
 
-const DELIVERY_API_URL = "http://localhost:8080/api/delivery";
-const DEVICE_API_URL = "http://localhost:8080/api/device";
-const DELIVERY_STATUS_API_URL = "http://localhost:8080/api/delivery";
+const DELIVERY_API_URL = "api-service-hab9fmgne7dxa5ad.italynorth-01.azurewebsites.net/api/delivery";
+const DEVICE_API_URL = "api-service-hab9fmgne7dxa5ad.italynorth-01.azurewebsites.net/api/device";
+const DELIVERY_STATUS_API_URL = "api-service-hab9fmgne7dxa5ad.italynorth-01.azurewebsites.net/api/delivery";
 
 export const newDelivery = async (data: Record<string, unknown>) => {
     try {
