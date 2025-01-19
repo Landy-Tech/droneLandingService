@@ -3,29 +3,27 @@ import { IDevice } from '../type/device';
 
 const DELIVERY_API_URL = "http://localhost:8080/api/delivery";
 const DEVICE_API_URL = "http://localhost:8080/api/device";
-const DELIVERY_STATUS_API_URL="http://localhost:8080/api/delivery";
+const DELIVERY_STATUS_API_URL = "http://localhost:8080/api/delivery";
 
-export const newDelivery = async (data) => {
+export const newDelivery = async (data: Record<string, unknown>) => {
     try {
         console.log('Calling newDelivery API with:', data);
         const response = await axios.post(`${DELIVERY_API_URL}/new`, data);
         console.log('API response:', response.data);
-        
-        // Ensure the deliveryId exists in the response
-        const delivery = response.data.delivery;  // Use the 'delivery' object from the response
+
+        const delivery = response.data.delivery;
         if (!delivery || !delivery._id) {
             throw new Error('Delivery ID is missing in response');
         }
-        
-        return { status: response.status, deliveryId: delivery._id };  // Use '_id' as deliveryId
-    } catch (error) {
+
+        return { status: response.status, deliveryId: delivery._id };
+    } catch (error: unknown) {
         return handleApiError(error);
     }
 };
 
-export const updateDeliveryStatus = async (deliveryId, status, endTime) => {
+export const updateDeliveryStatus = async (deliveryId: string, status: string, endTime: string) => {
     try {
-        // Check if deliveryId, status, and endTime are valid
         if (!deliveryId || !status || !endTime) {
             throw new Error('Delivery ID, status, or endTime is missing');
         }
@@ -34,8 +32,6 @@ export const updateDeliveryStatus = async (deliveryId, status, endTime) => {
         console.log('Sending PUT request to:', url, 'with status:', status, 'and end_time:', endTime);
 
         const response = await axios.put(url, { status, end_time: endTime });
-
-        // Check the response
         console.log('Received response:', response);
 
         if (response.status === 200) {
@@ -43,31 +39,22 @@ export const updateDeliveryStatus = async (deliveryId, status, endTime) => {
         }
 
         return { status: response.status, ...response.data };
-    } catch (error) {
-        console.error('Error during API request:', error);
-
-        if (error.response) {
-            console.error('Error response data:', error.response.data);
-            console.error('Error response status:', error.response.status);
-        }
-
+    } catch (error: unknown) {
         return handleApiError(error);
     }
 };
 
-
-export const closeDelivery = async (deliveryId, success, failureReason) => {
+export const closeDelivery = async (deliveryId: string, success: boolean, failureReason?: string) => {
     try {
         const response = await axios.put(`${DELIVERY_API_URL}/${deliveryId}/close`, { success, failureReason });
         return { status: response.status, ...response.data };
-    } catch (error) {
+    } catch (error: unknown) {
         return handleApiError(error);
     }
 };
 
-const handleApiError = (error) => {
+const handleApiError = (error: unknown) => {
     if (axios.isAxiosError(error)) {
-        // If there is a response from the server, show the response data
         if (error.response) {
             console.error('Axios error:', error.response.data);
             return {
@@ -75,7 +62,6 @@ const handleApiError = (error) => {
                 message: error.response.data?.message || 'Unknown error occurred.',
             };
         } else {
-            // In case of network error or other error without a response
             console.error('Axios error without response:', error.message);
             return {
                 status: 500,
@@ -84,7 +70,6 @@ const handleApiError = (error) => {
         }
     }
 
-    // Handle unexpected errors
     console.error('Unexpected error:', error);
     return {
         status: 500,
@@ -92,7 +77,7 @@ const handleApiError = (error) => {
     };
 };
 
-export const getDeviceStatus = async (deviceId) => {
+export const getDeviceStatus = async (deviceId: string) => {
     try {
         if (!deviceId) {
             throw new Error("Device ID is required.");
@@ -100,44 +85,32 @@ export const getDeviceStatus = async (deviceId) => {
         const response = await axios.get(`${DEVICE_API_URL}/${deviceId}`);
         console.log('Device status response:', response.data);
 
-        // Assuming the status is in response.data.status
         const deviceStatus = response.data.status;
 
-        // Return 'Active' or 'Inactive' based on the device status
         if (deviceStatus === 'active') {
             return { status: 'Active' };
         } else {
             return { status: 'Inactive' };
         }
-    } catch (error) {
+    } catch (error: unknown) {
         return handleApiError(error);
     }
 };
 
 export const updateDeviceStatus = async (deviceId: string, data: Partial<IDevice>) => {
     try {
-      const url = `${DEVICE_API_URL}/${deviceId}/wss`;
-      console.log('Sending PUT request to:', url, 'with data:', data);  // לוג נוסף
-  
-      const response = await axios.put(url, data);
-  
-      // בדיקת התשובה
-      console.log('Received response:', response);  // לוג נוסף אחרי קבלת התשובה
-  
-      if (response.status === 200) {
-        console.log('Device status updated successfully');
-      }
-  
-      return { status: response.status, ...response.data };
-    } catch (error) {
-      console.error('Error during API request:', error);  // לוג במקרה של שגיאה
-  
-      // טיפול בשגיאות בצורה מעמיקה יותר
-      if (error.response) {
-        console.error('Error response data:', error.response.data);
-        console.error('Error response status:', error.response.status);
-      }
-  
-      return handleApiError(error);
+        const url = `${DEVICE_API_URL}/${deviceId}/wss`;
+        console.log('Sending PUT request to:', url, 'with data:', data);
+
+        const response = await axios.put(url, data);
+        console.log('Received response:', response);
+
+        if (response.status === 200) {
+            console.log('Device status updated successfully');
+        }
+
+        return { status: response.status, ...response.data };
+    } catch (error: unknown) {
+        return handleApiError(error);
     }
-  };
+};
