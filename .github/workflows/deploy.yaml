@@ -20,14 +20,6 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
 
-      - name: Azure Login
-        uses: azure/login@v1
-        with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
-
-      - name: Enable logs in App Service
-        run: az webapp log config --name ${{ env.App-Name }} --resource-group ${{ env.Resource-Group }} --web-server-logging filesystem
-
       - name: Login to Azure Container Registry
         run: echo "${{ secrets.ACR_PASSWORD }}" | docker login ${{ env.Registry-Name }}.azurecr.io -u "${{ secrets.ACR_USERNAME }}" --password-stdin
 
