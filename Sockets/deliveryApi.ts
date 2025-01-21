@@ -102,7 +102,9 @@ export const updateDeviceStatus = async (deviceId: string, data: Partial<IDevice
         const url = `${DEVICE_API_URL}/${deviceId}/wss`;
         console.log('Sending PUT request to:', url, 'with data:', data);
 
-        const response = await axios.put(url, data);
+        // הגדרת timeout כאן
+        const response = await axios.put(url, data, { timeout: 10000 });
+
         console.log('Received response:', response);
 
         if (response.status === 200) {
