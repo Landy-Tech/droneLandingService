@@ -1,21 +1,22 @@
 {
   "compilerOptions": {
-    "target": "ES6",
-    "module": "commonjs",
-    "outDir": "./dist",
-    "rootDir": "./", // שורש הפרויקט
-    "strict": true,
-    "esModuleInterop": true,
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
-    "allowSyntheticDefaultImports": true
+    "target": "es2016",                                  /* הגדרת גרסת ג'אווהסקריפט המפולגת */
+    "module": "commonjs",                                /* הגדרת סוג המודול */
+    "esModuleInterop": true,                             /* תמיכה בהמרת מודולים בין CommonJS ל-ES6 */
+    "forceConsistentCasingInFileNames": true,            /* בדיקה שהשמות בתיקיות ובקבצים תואמים */
+    "outDir": "./dist",                                  /* תיקיית הפלט בה יווצרו קבצי ה-JS */
+    "rootDir": "./src",                                  /* תיקיית המקור בה נמצאים קבצי ה-TS */
+    "strict": true,                                      /* הפעלת כל הגדרות הבדיקות הקפדניות */
+    "skipLibCheck": true,                                /* דילוג על בדיקות קבצי דקלרציה */
+    "sourceMap": true,                                   /* יצירת קבצי sourcemap */
+    "removeComments": true,                              /* הסרת תגובות מקבצי ה-JS */
+    "declaration": false,                                /* אל תיצור קבצי דקלרציה */
+    "noEmit": false                                      /* אל תיצור קבצי TypeScript (אם לא דרושים) */
   },
   "include": [
-    "*.ts",         // קבצי TypeScript בשורש
-    "Sockets/**/*.ts", // קבצים בתיקיית Sockets
-    "type/**/*.ts"     // קבצים בתיקיית type
+    "src/**/*.ts"                                        /* כל קבצי ה-TS בתיקיית src */
   ],
   "exclude": [
-    "node_modules"
+    "node_modules"                                       /* דילוג על תיקיית node_modules */
   ]
 }

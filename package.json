@@ -2,10 +2,10 @@
   "name": "devicelivestream",
   "version": "1.0.0",
   "description": "",
-  "main": "/app.ts",
+  "main": "src/app.ts",
   "scripts": {
     "start": "node ./app.ts",
-    "start:dev": "tsx --watch ./app.ts",
+    "start:dev": "tsx --watch src/app.ts",
     "build": "tsc"
   },
   "keywords": [],
