@@ -92,7 +92,7 @@ export const setupDeliveryNamespace = (io: SocketIOServer) => {
                     const updateResult = await updateDeliveryStatus(deliveryId, deliveryStatus, endTime);
                     console.log(updateResult);
         
-                    if (updateResult.status === 200) {
+                    if (updateResult.status === 'Succeeded' || updateResult.status === 'Failed') {
                         console.log(`Delivery ${deliveryId} status updated to ${deliveryStatus}`);
         
                         // Send automatic update to the client
