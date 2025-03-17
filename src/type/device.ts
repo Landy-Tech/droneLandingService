@@ -7,7 +7,7 @@ export interface IDevice {
     pointOfContact?: string;
     phoneOfContact?: string;
     status: 'Active' | 'Faulty' | 'Busy' | 'InActive' | 'InDelivery';
-    statusArea?: 'Success' | 'Failure' | 'In Progress';
+    statusArea?: 'Clear' | 'Not Clear' | 'InActive';
     type: 'Fixed' | 'Portable';
     location?: string;
   }
